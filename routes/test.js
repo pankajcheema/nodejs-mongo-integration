@@ -8,9 +8,9 @@ router.post('/insert', async function(req, res, next)  {
     console.log(req.body);
     let result = await test2.insert(req.body);
     
-    return res.status(200).send(result);
+    return res.status(result.httpstatus).send(result);
    } catch (error) {
-       throw error;
+    return res.status(500).send(error);
    }
 
 });

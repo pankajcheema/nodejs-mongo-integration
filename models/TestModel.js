@@ -6,12 +6,12 @@ const Schema = mongoose.Schema;
 const SomeModelSchema = new Schema({
     test: {
         type: String,
-        min:[6,'min length should be 6'],
+        minlength:[6,'min length should be 6'],
         required: true
     },    
     sirname: {
         type: String,
-        min: [3,'min 3 length'],
+        minlength: [3,'min 3 length'],
         required: true,
     },
     

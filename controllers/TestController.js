@@ -1,9 +1,10 @@
 /* eslint-disable strict */
 let response = {};
 
-//var SomeModel = require('./../models/TestModel');
+
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+var SomeModel = require('./../models/TestModel');
 
 const db = require('./../config/db')
 
@@ -14,32 +15,24 @@ class Test {
 
   async insert(data) {
 
-    const SomeModelSchema = new Schema({
-      test: {
-          type: String,
-          min:[6,'min length should be 6'],
-          required: true
-      },    
-      sirname: {
-          type: Number,
-          min: [3,'min 3 length'],
-          required: true,
-      }      
-  });
-
-  var SomeModel = mongoose.model('SomeModel', SomeModelSchema );
-
-  var somemodel = new SomeModel({
-      test:'aj',
-      sirname: '1'    });
+  
+  var somemodel = new SomeModel(data);
 
     var error=somemodel.validateSync()
 
     if(error){
-      console.log(error);
+      response.error=error.errors;
+      response.httpstatus=400;
+      response.message="validation error";
+      return response;
     }
-    console.log(error);
-    return somemodel.save()
+    
+    let result = somemodel.save() 
+    response.data=result;
+    response.httpstatus=200;
+    response.message="success";
+
+    return response;
 
     
   }
@@ -56,10 +49,8 @@ class Test {
       },
       drink: {
         type: String,
-        enum: ['Coffee', 'Tea'],
-        required: function() {
-          return this.bacon > 3;
-        }
+        min: 6,
+        required: true
       }
     });
     var Breakfast = mongoose.model('Breakfast', breakfastSchema);
