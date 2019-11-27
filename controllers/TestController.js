@@ -5,6 +5,7 @@ let response = {};
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 var SomeModel = require('./../models/TestModel');
+const delay = require('delay');
 
 const db = require('./../config/db')
 
@@ -17,7 +18,7 @@ class Test {
 
   
   var somemodel = new SomeModel(data);
-
+  var somemodel2 = new SomeModel(data);
     var error=somemodel.validateSync()
 
     if(error){
@@ -27,11 +28,15 @@ class Test {
       return response;
     }
     
-    let result = somemodel.save() 
+    await delay(100000);
+      let result = somemodel.save() ;
+      let result2 = somemodel2.save() ;
+      
+    
     response.data=result;
     response.httpstatus=200;
     response.message="success";
-
+    console.log("entry done")
     return response;
 
     

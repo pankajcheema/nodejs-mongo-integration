@@ -6,9 +6,10 @@ var test2 = require('./../controllers/TestController');
 router.post('/insert', async function(req, res, next)  {
    try {
     console.log(req.body);
-    let result = await test2.insert(req.body);
-    
-    return res.status(result.httpstatus).send(result);
+    let result = test2.insert(req.body);
+    console.log(result);
+    console.log("executed");
+    return res.status(200).send({});
    } catch (error) {
     return res.status(500).send(error);
    }
